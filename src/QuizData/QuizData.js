@@ -15,7 +15,7 @@ const QuizData = [
   {
     id:3,
     question: "Who is the CEO of Tesla?",
-    options: ["Mark Jukrburg", "Bill Gates", "Elon musk", "Ratan Tata"],
+    options: ["Mark Jukrburg", "Bill Gates", "Elon Musk", "Ratan Tata"],
     answer: "Elon Musk",
   },
   {
