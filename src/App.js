@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import QuizData from "./QuizData/QuizData";
 
-function App(props) {
+function App() {
   const [currentQuestion, setcurrentQuestion] = useState(0);
-  const [bgColor, setBgColor] = useState("gray");
+  const [isDisabled, setIsDisabled] = useState(false);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
@@ -13,22 +13,25 @@ function App(props) {
     setcurrentQuestion(nextQues);
     if (nextQues < QuizData.length) {
       setShowScore(false);
-      setBgColor("grey");
+      setIsDisabled(false);
       setcurrentQuestion(nextQues);
     } else {
       setShowScore(true);
     }
   };
 
-  function handleOptionClick(option) {
+  const handleOptionClick = (option, index, e) => {
     if (QuizData[currentQuestion].answer === option) {
       setScore(score + 10);
-      setBgColor("green");
+      document.getElementById(e.target.id).style.backgroundColor = "green";
+      setIsDisabled(true);
     } else {
-      setBgColor("red");
+      document.getElementById(e.target.id).style.backgroundColor = "red";
+      setIsDisabled(true);
     }
-  }
+  };
 
+  
   return (
     <div className=" d-flex justify-content-center align-items-center h-100 w-100 bg-info">
       {showScore ? (
@@ -47,12 +50,14 @@ function App(props) {
           <div className="options d-flex flex-column justify-content-center align-items-center w-100">
             {QuizData[currentQuestion].options.map((option, index) => (
               <button
-                key={index}
-                onClick={() => {
-                  handleOptionClick(option);
+                key={option}
+                id={option}
+                disabled={isDisabled}
+                onClick={(e) => {
+                  handleOptionClick(option, index, e);
                 }}
                 className="btn  w-75 m-1"
-                style={{ backgroundColor: bgColor }}
+                style={{ backgroundColor: "gray" }}
               >
                 {option}
               </button>
